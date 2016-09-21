@@ -1,5 +1,9 @@
 ---
 # Playbook for provisioning Devspace
+#
+- include: ttyfix.yml
+  vars:
+      tty_fix_hosts: devspace
 
 - hosts: devspace
 

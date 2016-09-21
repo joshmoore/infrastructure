@@ -14,6 +14,7 @@
 
   vars:
 
+    os_cloud: "omedev"
     vm_image: "CentOS 7 1607"
     vm_key_name: "jenkins"
     vm_flavour: m2.large
@@ -36,12 +37,14 @@
 
     - name: Docker external access security group
       os_security_group:
+        cloud: "{{ os_cloud }}"
         description: External access to Docker servers (managed by Ansible)
         name: docker-devspace-external
         state: present
 
     - name: Docker external access security group rules
       os_security_group_rule:
+        cloud: "{{ os_cloud }}"
         direction: ingress
         port_range_max: "{{ item }}"
         port_range_min: "{{ item }}"
@@ -62,6 +65,7 @@
 
     - name: Docker VM
       os_server:
+        cloud: "{{ os_cloud }}"
         name: "{{ vm_name }}"
         state: present
         image: "{{ vm_image }}"

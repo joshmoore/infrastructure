@@ -10,6 +10,10 @@
   roles:
   - role: docker
 
+- hosts: omero-hosts
+  roles:
+    - role: omero-server
+
 - hosts: redis
   roles:
   - role: redis

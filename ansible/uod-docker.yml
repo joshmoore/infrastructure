@@ -14,5 +14,6 @@
   - role: versioncontrol-utils
   - role: docker
     docker_groupmembers: [centos]
+    docker_use_ipv4_nic_mtu: True
   - role: sudoers
   - role: local-accounts

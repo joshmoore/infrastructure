@@ -13,9 +13,15 @@
     vm_image: "CentOS 7 1607"
     vm_flavour: m2.large
     vm_groups: "ansible-managed,os-image-centos,docker-hosts"
+    vm_project: "{{ lookup('env', 'OS_PROJECT_NAME') | default('ome101', true) }}"
+    vm_network: "{{ vm_project }}_network"
     ignore_internal_known_hosts: True
 
   pre_tasks:
+
+    - os_client_config:
+    - debug: var={{ item }}
+      with_items: "{{ openstack.clouds|rejectattr('secgroup_source', 'none')|list() }}"
 
     - fail:
         msg: "vm_key_name is required"
@@ -59,6 +65,7 @@
         image: "{{ vm_image }}"
         key_name: "{{ vm_key_name }}"
         flavor: "{{ vm_flavour }}"
+        network: "{{ vm_network }}"
         auto_ip: yes
         meta:
           hostname: "{{ vm_name }}"

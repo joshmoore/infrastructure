@@ -11,8 +11,23 @@
 - name: upstream docker | install docker
   become: yes
   yum:
-    pkg: docker-engine
+    pkg: "{{ item }}"
     state: present
+  with_items:
+    - docker-engine
+    - python-devel
+    - python-pip
+
+- name: install python packages
+  become: yes
+  pip:
+      name: "{{ item }}"
+      #extra_args: "--upgrade"
+      state: latest
+  with_items:
+    - pip
+    - pyyaml
+    - docker-compose
 
 - name: storage | setup lvm docker-pool
   become: yes
